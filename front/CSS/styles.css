@@ -1,0 +1,75 @@
+/* Reset Body */
+body{
+	padding : 0px;
+	margin : 0px;
+}
+
+
+/*
+    Primary color         #99ccff
+    Primary bright color  #3399FF
+    Gray bg               #f6f6f6
+    Dark Gray bg          #eeeeee
+*/
+
+.Header{
+	width: 100%;
+	float: right;
+}
+
+.Header input{
+	width: 25%;
+	float: right;
+	margin : 1rem;
+}
+
+.Icon_Holder{
+	width: 32px;
+	height: 25.3px;
+	margin : 1rem;
+	float:right;
+}
+
+.Left{
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+
+.Right{
+	width: 50%;
+	height: 100%;
+	float: right;
+}
+
+.Left_Container{
+	background-color: #99ccff;
+	height: 650px; /* 임시 높이 설정 */
+	margin: 0.5rem;
+	border-width: 0.1px;
+	border-color: #000000;
+	border-style: solid;
+	padding-left: 1rem;
+}
+
+.Left_Container h1{ /* 삭제 요망 */
+    position: absolute;
+	top: 45%;
+	left: 5%;
+}
+
+.Right_Container{
+	background-color: #eeeeee;
+	height: 650px; /* 임시 높이 설정 */
+	margin: 0.5rem;
+	border-width: 0.1px;
+	border-color: #000000;
+	border-style: solid;
+	padding-left: 1rem;
+}
+
+.Right_Container h1{ /* 삭제 요망 */
+    position: absolute;
+	top: 45%;
+	right: 8%;
+}
