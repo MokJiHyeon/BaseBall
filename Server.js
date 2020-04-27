@@ -3,6 +3,7 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 // 생성자 및 상수정의
 // 반드시 const로 정의할 것
@@ -22,13 +23,19 @@ app.use(session({
 // static 설정 ( 파일 접근 제한 해제 )
 app.use(express.static(path.join( __dirname, './Baseball/front' )));
 
+// POST 통신을 위한 bodyParser 사용
+app.use(bodyParser.json()); // 요청 본문 파싱
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // 이하 라우터 정의
-const index = require('./routes/router');
-const readExcels = require('./routes/readExcels');
+const index = require('./routes/router.js');
+const readExcels = require('./routes/readExcels.js');
+const PlayerData = require('./routes/PlayerData.js');
 
 // 이하 라우터 사용 ( 라우팅 )
 app.use('/',index);
 app.use('/readExcels',readExcels);
+app.use('/PlayerData',PlayerData);
 
 // 서버 리스닝
 var server = app.listen(port, function() {

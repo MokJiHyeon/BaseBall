@@ -10,7 +10,7 @@ router.get('/Hyun-Jin_Ryu', function (req, res, next) {
 
     fs.readFile('./DataBase/류현진.csv', 'utf8', function(err, data){
       dataArray = data.split(/\r?\n/);
-      res.json(dataArray);
+      res.send(dataArray);
     })
 });
 
