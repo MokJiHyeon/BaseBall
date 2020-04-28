@@ -4,28 +4,16 @@ var Name = {
     'Name': N
 };
 
+var PlayerInfo = '';
+
 $.ajax({
     type: 'POST',
     url: '/PlayerData/Basic_ByName',
     data: Name,
-    dataType: 'json',
     success: function (data) {
         // Shin-Soo Choo의 기본 데이터를 서버로부터 제공받음.
         console.log(data);
-    },
-    error: function (e) {
-        alert(e.responseText);
-    }
-});
-
-$.ajax({
-    type: 'POST',
-    url: '/PlayerData/Stats_ByName',
-    data: Name,
-    dataType: 'json',
-    success: function (data) {
-        // Shin-Soo Choo의 기본 데이터를 서버로부터 제공받음.
-        console.log(data);
+        PlayerInfo = data;
     },
     error: function (e) {
         alert(e.responseText);
