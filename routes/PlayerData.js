@@ -39,19 +39,38 @@ router.post('/Basic_byName', function (req, res, next) {
     // 0번 인덱스 = 선수 기본 정보 등록
     Player.push(Body_Json.search_player_all.queryResults.row);
 
-    // 선수가 데뷔한 시점으로부터 2019년까지 (2020년은 데이터 없음) Season Stat을 추가한다. *추신수는 2005 ~ 2019
-    // 1번 인덱스 ~ 마지막 -1번 인덱스까지 데이터 등록
-    var debutYear = Body_Json.search_player_all.queryResults.row.pro_debut_date.substr(0, 4);
-    for (var i = debutYear; i < 2020; i++) {
-        var SeasonStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='" + i + "'&player_id='" + master[0][Id_index] + "'");
-        Player.push(JSON.parse(SeasonStat.body).sport_hitting_tm.queryResults.row);
+    // 선수의 Position이 '투수'(P) 일경우
+    if(Body_Json.search_player_all.queryResults.row.position == "P"){
+        // 선수가 데뷔한 시점으로부터 2019년까지 (2020년은 데이터 없음) Season Stat을 추가한다. *류현진은 2012 ~ 2019
+        // 1번 인덱스 ~ 마지막 -1번 인덱스까지 데이터 등록
+        var debutYear = Body_Json.search_player_all.queryResults.row.pro_debut_date.substr(0, 4);
+        for (var i = debutYear; i < 2020; i++) {
+            var SeasonStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type='R'&season='" + i + "'&player_id='" + master[0][Id_index] + "'");
+            Player.push(JSON.parse(SeasonStat.body).sport_pitching_tm.queryResults.row);
+        }
+    
+        // 마지막인덱스 모든 성적을 합한 Career Stat을 추가한다
+        // 마지막 인덱스 == Player.length
+        var CareerStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type='R'&player_id='" + master[0][Id_index] + "'");
+    
+        Player.push(JSON.parse(CareerStat.body).sport_career_pitching.queryResults.row);
     }
-
-    // 마지막인덱스 모든 성적을 합한 Career Stat을 추가한다
-    // 마지막 인덱스 == Player.length
-    var CareerStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id='" + master[0][Id_index] + "'");
-
-    Player.push(JSON.parse(CareerStat.body).sport_career_hitting.queryResults.row);
+    // 선수의 Position이 '타자' 일경우
+    else{
+        // 선수가 데뷔한 시점으로부터 2019년까지 (2020년은 데이터 없음) Season Stat을 추가한다. *추신수는 2005 ~ 2019
+        // 1번 인덱스 ~ 마지막 -1번 인덱스까지 데이터 등록
+        var debutYear = Body_Json.search_player_all.queryResults.row.pro_debut_date.substr(0, 4);
+        for (var i = debutYear; i < 2020; i++) {
+            var SeasonStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='" + i + "'&player_id='" + master[0][Id_index] + "'");
+            Player.push(JSON.parse(SeasonStat.body).sport_hitting_tm.queryResults.row);
+        }
+    
+        // 마지막인덱스 모든 성적을 합한 Career Stat을 추가한다
+        // 마지막 인덱스 == Player.length
+        var CareerStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id='" + master[0][Id_index] + "'");
+    
+        Player.push(JSON.parse(CareerStat.body).sport_career_hitting.queryResults.row);
+    }
 
     // 모두 종료후 전송
     // 데이터 받는 속도가 조금 느림 (데이터 량이 많음)
