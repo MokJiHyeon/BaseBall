@@ -28,7 +28,6 @@ router.post('/Basic_byName', function (req, res, next) {
     // Name : 선수 이름 , Id_index : 선수의 Id가 있는 index(master 배열 내부의)
     var Name = req.body.Name;
     var Id_index = master[1].indexOf(Name);
-
     var Player = Array();
 
     var Player_Info = request('GET', "http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='" + Name + "'");
@@ -40,7 +39,7 @@ router.post('/Basic_byName', function (req, res, next) {
     Player.push(Body_Json.search_player_all.queryResults.row);
 
     // 선수의 Position이 '투수'(P) 일경우
-    if(Body_Json.search_player_all.queryResults.row.position == "P"){
+    if (Body_Json.search_player_all.queryResults.row.position == "P") {
         // 선수가 데뷔한 시점으로부터 2019년까지 (2020년은 데이터 없음) Season Stat을 추가한다. *류현진은 2012 ~ 2019
         // 1번 인덱스 ~ 마지막 -1번 인덱스까지 데이터 등록
         var debutYear = Body_Json.search_player_all.queryResults.row.pro_debut_date.substr(0, 4);
@@ -48,15 +47,15 @@ router.post('/Basic_byName', function (req, res, next) {
             var SeasonStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type='R'&season='" + i + "'&player_id='" + master[0][Id_index] + "'");
             Player.push(JSON.parse(SeasonStat.body).sport_pitching_tm.queryResults.row);
         }
-    
+
         // 마지막인덱스 모든 성적을 합한 Career Stat을 추가한다
         // 마지막 인덱스 == Player.length
         var CareerStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type='R'&player_id='" + master[0][Id_index] + "'");
-    
+
         Player.push(JSON.parse(CareerStat.body).sport_career_pitching.queryResults.row);
     }
     // 선수의 Position이 '타자' 일경우
-    else{
+    else {
         // 선수가 데뷔한 시점으로부터 2019년까지 (2020년은 데이터 없음) Season Stat을 추가한다. *추신수는 2005 ~ 2019
         // 1번 인덱스 ~ 마지막 -1번 인덱스까지 데이터 등록
         var debutYear = Body_Json.search_player_all.queryResults.row.pro_debut_date.substr(0, 4);
@@ -64,11 +63,11 @@ router.post('/Basic_byName', function (req, res, next) {
             var SeasonStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='" + i + "'&player_id='" + master[0][Id_index] + "'");
             Player.push(JSON.parse(SeasonStat.body).sport_hitting_tm.queryResults.row);
         }
-    
+
         // 마지막인덱스 모든 성적을 합한 Career Stat을 추가한다
         // 마지막 인덱스 == Player.length
         var CareerStat = request('GET', "http://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id='" + master[0][Id_index] + "'");
-    
+
         Player.push(JSON.parse(CareerStat.body).sport_career_hitting.queryResults.row);
     }
 
@@ -77,5 +76,33 @@ router.post('/Basic_byName', function (req, res, next) {
     res.send(Player);
 });
 
+
+router.post('/search_name', function (req, res, next) {
+    console.log('PlayerData/search_name Called');
+
+    // Name : 선수 이름 , Id_index : 선수의 Id가 있는 index(master 배열 내부의)
+    var Word = req.body.word.toUpperCase();
+    var search_index = Array();
+    var count = 0;
+
+    if (Word.length > 1) {
+        for (var i = 0; i < master[1].length - 1; i++) {
+
+            if ((master[1][i].toString().toUpperCase().match(Word) != null)) {
+                search_index[count] = master[1][i];
+                count++;
+            };
+
+
+        }
+    }
+
+    var p = Array();
+    p.push(search_index);
+    var player = JSON.parse(JSON.stringify(p));
+
+    res.send(player);
+
+});
 // 모듈화 -> 하지 않으면 'Router.use() requires a middleware function but got a Object' 에러 발생
 module.exports = router;

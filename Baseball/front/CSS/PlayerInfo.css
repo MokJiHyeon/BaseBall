@@ -1,5 +1,6 @@
 /* Reset Body */
 body{
+    
 	padding : 0px;
     margin : 0px;
 }
@@ -11,16 +12,36 @@ body{
     Dark Gray bg          #eeeeee
 */
 
+.searchbox{
+    width: 25%;
+	float: right;
+	margin : 1rem;
+    z-index: 2;
+    
+
+}
+.searchList{
+    background-color: rgba(200,200,200);
+
+}
+.searchList ul{
+    display: none;
+    list-style: none;
+    margin: 0px;
+    padding: 10px;
+}
+
+
+.search_content{
+     color: black;
+}
+
 .Header{
+   position: fixed;
 	width: 100%;
 	float: right;
 }
 
-.Header input{
-	width: 25%;
-	float: right;
-	margin : 1rem;
-}
 
 .Icon_Holder{
 	width: 32px;
@@ -30,6 +51,7 @@ body{
 }
 
 .Player_Container{
+    
     margin: 0.5rem;
     width:100%;
 }
@@ -41,6 +63,7 @@ body{
 }
 
 .Player{
+    
     width:100%;
     display:flex;
 }

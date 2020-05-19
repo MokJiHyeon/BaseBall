@@ -31,11 +31,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const index = require('./routes/router.js');
 const readExcels = require('./routes/readExcels.js');
 const PlayerData = require('./routes/PlayerData.js');
+const LeaderBoard = require('./routes/LeaderBoard.js');
 
 // 이하 라우터 사용 ( 라우팅 )
 app.use('/',index);
 app.use('/readExcels',readExcels);
 app.use('/PlayerData',PlayerData);
+app.use('/LeaderBoard',LeaderBoard);
 
 // 서버 리스닝
 var server = app.listen(port, function() {

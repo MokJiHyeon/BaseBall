@@ -84,16 +84,25 @@ body{
 	top: 50px;
 	padding:0.5rem; 
 	border-color: solid 1px #000000;
+	box-sizing: unset;
 }
 
-span.property-name{
-	background-color: rgba(200,200,200);
+span .property-name{
+	background-color: rgba(150,150,150);
 }
 
 .dg.main ul li{
-	background-color: rgba(200,200,200);
+	background-color: rgba(150,150,150);
 	color : rgb(0,0,0);
 	height:27px;
+}
+
+.dg .c {
+	display: inline-block;
+}
+
+.close_button .close_buttom{
+	background-color: rgba(150,150,150);
 }
 
 /* .dg.main.taller-than-window .close-button {

@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 
 <head>
-  <!-- StyleSheet 로드 -->
-  <link rel="stylesheet" href="../CSS/PlayerInfo.css">
+    <!-- StyleSheet 로드 -->
+    <link rel="stylesheet" href="../CSS/PlayerInfo.css">
 
-  <!-- FontAwesome(아이콘) 로드 -->
-  <link rel="stylesheet" href="../lib/FontAwesome/all.min.css">
+    <!-- FontAwesome(아이콘) 로드 -->
+    <link rel="stylesheet" href="../lib/FontAwesome/all.min.css">
 
-  <!-- BootStrap 로드 -->
-  <link rel="stylesheet" href="../lib/Bootstrap/bootstrap.min.css">
+    <!-- BootStrap 로드 -->
+    <link rel="stylesheet" href="../lib/Bootstrap/bootstrap.min.css">
 </head>
 
 <body>
     <!-- 헤더 ( 검색창 ) -->
+
     <div class="Header">
-        <div class="Icon_Holder"><i class="fas fa-search"></i></div>
-        <input class="form-control" type="text" placeholder="검색" aria-label="Search">
+
+        <div class="Icon_Holder" style="display: block" onclick="search_click()"><i class="fas fa-search"></i></div>
+        <div class="searchbox">
+            <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
+            <div class="searchList">
+                <ul id="PlayerList" role="listbox" ></ul>
+            </div>
+        </div>
+
+
     </div>
 
+    <br><br><br>
     <div class="Player_Container">
         <div class="Player">
             <img class="Img_Team" src="../../Images/i.png">
-            <div class="Basic_Info" id ="Basic_Info" >
-                <h1 id="Player_Name"></h1>
-               
+            <div class="Basic_Info" id="Basic_Info">
+
             </div>
         </div>
         <button class="btn btn-secondary" type="button"> 2020 예상 성적 </button>
@@ -34,34 +43,21 @@
     <div class="Contents_Container">
         <div class="Contents">
             <table class="table table-sm">
-                <thead class="thead-dark">
+                <thead class="thead-dark" id="thead-dark2">
                     <tr>
-                        <th scope="col">년도</th>
-                        <th scope="col">소속</th>
-                        <th scope="col">경기</th>
-                        <th scope="col">타석</th>
-                        <th scope="col">타수</th>
-                        <th scope="col">득점</th>
-                        <th scope="col">안타</th>
-                        <th scope="col">홈런</th>
-                        <th scope="col">타점</th>
-                        <th scope="col">볼넷</th>
-                        <th scope="col">삼진</th>
-                        <th scope="col">도루</th>
-                        <th scope="col">사구</th>
-                        <th scope="col">타율</th>
-                        <th scope="col">출루율</th>
-                        <th scope="col">장타율</th>
-                        <th scope="col">OPS</th>
+
                     </tr>
                 </thead>
                 <tbody id="t"></tbody>
             </table>
         </div>
         <br>
-        
+
     </div>
-<div><table id = "boardList" border = "1"></table></div>
+    <div>
+        <table id="boardList" border="1"></table>
+    </div>
+
     <!-- <div class="overlay">
         <div class="overlay_Contents">
         </div>
@@ -70,6 +66,12 @@
 </body>
 
 <!-- jQuery 로드 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <!-- FontAwesome(아이콘) 로드 -->
@@ -79,3 +81,4 @@
 <script src="../lib/Bootstrap/bootstrap.min.js"></script>
 
 <script src="../JS/PlayerInfo.js"></script>
+<script src="../JS/Search.js"></script>

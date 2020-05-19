@@ -106,7 +106,7 @@ function init() {
     var SLmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xFF00FF })
 
     for (var i = 0; i < pitch_type.length; i++) {
-        var vertex = new THREE.Vector3(parseFloat(plate_z[i]) * 2.54 *3, 0, parseFloat(plate_x[i]) * 2.54 *3); // Vertex 좌표 생성
+        var vertex = new THREE.Vector3(parseFloat(plate_x[i]) * 10 , 0, parseFloat(plate_z[i]) * 10); // Vertex 좌표 생성
         var temp_pitch_type = pitch_type[i];
         switch (temp_pitch_type) {
             case 'FF':
@@ -184,13 +184,84 @@ function init() {
     var Gui_Container = document.getElementById('Gui_Container');
     Gui_Container.appendChild(Gui.domElement);
 
-    // gui에 탭 추가
-    Gui.add(GuiControls, 'FF');
-    Gui.add(GuiControls, 'FT');
-    Gui.add(GuiControls, 'FC');
-    Gui.add(GuiControls, 'CH');
-    Gui.add(GuiControls, 'CU');
-    Gui.add(GuiControls, 'SL');
+    // gui에 탭 추가 및 아이템에 이벤트 추가 (onChange)
+    var Flag_FF = 0;
+    Gui.add(GuiControls, 'FF').onChange(
+        function(params) {
+            if((Flag_FF % 2) == 0){
+                scene.remove(FF);
+            }
+            if((Flag_FF % 2) == 1){
+                scene.add(FF);
+            }
+            Flag_FF++;
+        }
+    );
+    
+    var Flag_FT = 0;
+    Gui.add(GuiControls, 'FT').onChange(
+        function(params) {
+            if((Flag_FT % 2) == 0){
+                scene.remove(FT);
+            }
+            if((Flag_FT % 2) == 1){
+                scene.add(FT);
+            }
+            Flag_FT++;
+        }
+    );
+
+    var Flag_FC = 0;
+    Gui.add(GuiControls, 'FC').onChange(
+        function(params) {
+            if((Flag_FC % 2) == 0){
+                scene.remove(FC);
+            }
+            if((Flag_FC % 2) == 1){
+                scene.add(FC);
+            }
+            Flag_FC++;
+        }
+    );
+    
+    var Flag_CH = 0;
+    Gui.add(GuiControls, 'CH').onChange(
+        function(params) {
+            if((Flag_CH % 2) == 0){
+                scene.remove(CH);
+            }
+            if((Flag_CH % 2) == 1){
+                scene.add(CH);
+            }
+            Flag_CH++;
+        }
+    );
+
+    var Flag_CU = 0;
+    Gui.add(GuiControls, 'CU').onChange(
+        function(params) {
+            if((Flag_CU % 2) == 0){
+                scene.remove(CU);
+            }
+            if((Flag_CU % 2) == 1){
+                scene.add(CU);
+            }
+            Flag_CU++;
+        }
+    );
+
+    var Flag_SL = 0;
+    Gui.add(GuiControls, 'SL').onChange(
+        function(params) {
+            if((Flag_SL % 2) == 0){
+                scene.remove(SL);
+            }
+            if((Flag_SL % 2) == 1){
+                scene.add(SL);
+            }
+            Flag_SL++;
+        }
+    );
 
     // Div(Scene)에 Renderer를 등록
     function render() {

@@ -1,53 +1,95 @@
 // 서버에서 선수 이름으로 Data를 제공받음 * 현재는 Shin-Soo Choo 고정
-var N = 'Hyun-Jin Ryu';
-var Name = {
-    'Name': N
-};
 
 var PlayerInfo = '';
 
-$.ajax({
-    type: 'POST',
-    url: '/PlayerData/Basic_ByName',
-    data: Name,
-    success: function (data) {
-        if(data[0].position == "P"){
-            Pitcher(data);
-        }
-        else{
-            Batter(data);
-        }
-    },
-    error: function (e) {
-        alert(e.responseText);
-    }
-});
+PlayerInfo22('Hyun-Jin Ryu')
 
-function Pitcher(data){
-    
+function PlayerInfo22(Name) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/PlayerData/Basic_ByName',
+        data: Name,
+        success: function (data) {
+            $('#thead-dark2 *').remove();
+            $('#t *').remove();
+
+            $("#Basic_Info *").remove();
+            if (data[0].position == "P") {
+                Pitcher(data);
+            } else {
+                Batter(data);
+            }
+        },
+        error: function (e) {
+            alert(e.responseText);
+        }
+    });
+}   
+
+function Pitcher(data) {
+
     // Thead 동적으로 생성하는 코드 여기에 적을것
 
+    var Pit_Thead = '<th scope="col">' + "년도" + '</th>' + '<th scope="col">' + "소속" + '</th>' + '<th scope="col">' + "경기" + '</th>' + '<th scope="col">' + "선발" + '</th>' + '<th scope="col">' + "승" + '</th>' + '<th scope="col">' + "패" + '</th>' + '<th scope="col">' + "홀드" + '</th>' + '<th scope="col">' + "세이브" + '</th>' + '<th scope="col">' + "ERA" + '</th>' + '<th scope="col">' + "이닝" + '</th>' + '<th scope="col">' + "피안타" + '</th>' + '<th scope="col">' + "피홈런" + '</th>' + '<th scope="col">' + "실점" + '</th>' + '<th scope="col">' + "삼진" + '</th>' + '<th scope="col">' + "볼넷" + '</th>' + '<th scope="col">' + "WHIP" + '</th>';
+    $("#thead-dark2").append(Pit_Thead);
 
     // <----------------END---------------->
 
     // 투수의 기본 데이터를 서버로부터 제공받음.
-    var str = '<TR>';  // 선수 성적 테이블
+    var str = '<TR>'; // 선수 성적 테이블
     var basic_info = '<div>';
     PlayerInfo = data;
+    if (PlayerInfo[0].bats == "L") {
+        PlayerInfo[0].bats = "왼손";
+    }
+    if (PlayerInfo[0].bats == "R") {
+        PlayerInfo[0].bats = "오른손";
+    }
+    if (PlayerInfo[0].throws == "L") {
+        PlayerInfo[0].throws = "왼손";
+    }
+    if (PlayerInfo[0].throws == "R") {
+        PlayerInfo[0].throws = "오른손";
+    }
 
     console.log(PlayerInfo);
-}
+    basic_info += '<h1>'+PlayerInfo[0].name_display_first_last+'</h1>'+'<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
 
+
+    
+    $("#Basic_Info").append(basic_info);
+
+    $.each(PlayerInfo, function (i) {
+        if (PlayerInfo[i] != null) {
+            if (PlayerInfo[i].season != null) {
+                str += '<TD>' + PlayerInfo[i].season + '</TD><TD>' + PlayerInfo[i].team_abbrev + '</TD><TD>' + PlayerInfo[i].g + '</TD><TD>' + PlayerInfo[i].gs + '</TD><TD>' + PlayerInfo[i].w + '</TD><TD>' + PlayerInfo[i].l + '</TD><TD>' + PlayerInfo[i].hld + '</TD><TD>' + PlayerInfo[i].sv + '</TD><TD>' + PlayerInfo[i].era + '</TD><TD>' + PlayerInfo[i].ip + '</TD><TD>' + PlayerInfo[i].h + '</TD><TD>' + PlayerInfo[i].hr + '</TD><TD>' + PlayerInfo[i].r + '</TD><TD>' + PlayerInfo[i].so + '</TD><TD>' + PlayerInfo[i].bb + '</TD><TD>' + PlayerInfo[i].whip + '</TD>';
+                str += '</TR>';
+            }
+            if (PlayerInfo[i].length > 1) {
+                for (var j = 0; j < PlayerInfo[i].length; j++) {
+                    str += '<TD>' + PlayerInfo[i][j].season + '</TD><TD>' + PlayerInfo[i][j].team_abbrev + '</TD><TD>' + PlayerInfo[i][j].g + '</TD><TD>' + PlayerInfo[i][j].gs + '</TD><TD>' + PlayerInfo[i][j].w + '</TD><TD>' + PlayerInfo[i][j].l + '</TD><TD>' + PlayerInfo[i][j].hld + '</TD><TD>' + PlayerInfo[i][j].sv + '</TD><TD>' + PlayerInfo[i][j].era + '</TD><TD>' + PlayerInfo[i][j].ip + '</TD><TD>' + PlayerInfo[i][j].h + '</TD><TD>' + PlayerInfo[i][j].hr + '</TD><TD>' + PlayerInfo[i][j].r + '</TD><TD>' + PlayerInfo[i][j].so + '</TD><TD>' + PlayerInfo[i][j].bb + '</TD><TD>' + PlayerInfo[i][j].whip + '</TD>';
+                    str += '</TR>';
+                }
+            }
+        }
+
+    });
+
+    $("#t").append(str);
+}
 
 function Batter(data) {
 
     // Thead 동적으로 생성하는 코드 여기에 적을것
+    var Bat_Thead = '<th scope="col">' + "년도" + '</th>' + '<th scope="col">' + "소속" + '</th>' + '<th scope="col">' + "경기" + '</th>' + '<th scope="col">' + "타석" + '</th>' + '<th scope="col">' + "타수" + '</th>' + '<th scope="col">' + "득점" + '</th>' + '<th scope="col">' + "안타" + '</th>' + '<th scope="col">' + "홈런" + '</th>' + '<th scope="col">' + "타점" + '</th>' + '<th scope="col">' + "볼넷" + '</th>' + '<th scope="col">' + "삼진" + '</th>' + '<th scope="col">' + "도루" + '</th>' + '<th scope="col">' + "사구" + '</th>' + '<th scope="col">' + "타율" + '</th>' + '<th scope="col">' + "출루율" + '</th>' + '<th scope="col">' + "장타율" + '</th>' + '<th scope="col">' + "OPS" + '</th>';
+    $("#thead-dark2").append(Bat_Thead);
 
 
     // <----------------END---------------->
 
     // 타자의 기본 데이터를 서버로부터 제공받음.
-    var str = '<TR>';  // 선수 성적 테이블
+    var str = '<TR>'; // 선수 성적 테이블
     var basic_info = '<div>';
     PlayerInfo = data;
 
@@ -63,9 +105,8 @@ function Batter(data) {
     if (PlayerInfo[0].throws == "R") {
         PlayerInfo[0].throws = "오른손";
     }
-    basic_info += '<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
+    basic_info += '<h1>'+PlayerInfo[0].name_display_first_last+'</h1>'+'<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
 
-    $("#Player_Name").append(PlayerInfo[0].name_display_first_last);
     $("#Basic_Info").append(basic_info);
 
     $.each(PlayerInfo, function (i) {
