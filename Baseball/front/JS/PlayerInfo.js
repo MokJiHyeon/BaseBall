@@ -1,8 +1,16 @@
 // 서버에서 선수 이름으로 Data를 제공받음 * 현재는 Shin-Soo Choo 고정
 
-var PlayerInfo = '';
+var Img_Team = document.getElementById('Img_Team');
 
-PlayerInfo22('Hyun-Jin Ryu')
+var PlayerInfo = '';
+var Player_Name = '';
+var Team_Logos = ['ARI','ATL','BAL','BOS','CHC','CIN','CLE','COL','CWS','DET','HOU','KC','LAA','LAD','MIA','MIL','MIN','NYM','NYY','OAK','PHI','PIT','SD','SEA','SF','STL','TB','TEX','TOR','WSH'];
+
+Data = {
+    'Name':'Shin-Soo Choo'
+}
+
+PlayerInfo22(Data)
 
 function PlayerInfo22(Name) {
 
@@ -53,11 +61,10 @@ function Pitcher(data) {
         PlayerInfo[0].throws = "오른손";
     }
 
-    console.log(PlayerInfo);
     basic_info += '<h1>'+PlayerInfo[0].name_display_first_last+'</h1>'+'<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
+    var Team = PlayerInfo[0].team_abbrev;
+    Img_Team.src = '../Images/Logos/'+Team+'.gif';
 
-
-    
     $("#Basic_Info").append(basic_info);
 
     $.each(PlayerInfo, function (i) {
@@ -77,6 +84,9 @@ function Pitcher(data) {
     });
 
     $("#t").append(str);
+
+    // 다음 URL을 위한 네이밍작업
+    Player_Name = PlayerInfo[0].name_display_first_last;
 }
 
 function Batter(data) {
@@ -106,6 +116,8 @@ function Batter(data) {
         PlayerInfo[0].throws = "오른손";
     }
     basic_info += '<h1>'+PlayerInfo[0].name_display_first_last+'</h1>'+'<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
+    var Team = PlayerInfo[0].team_abbrev;
+    Img_Team.src = '../Images/Logos/'+Team+'.gif';
 
     $("#Basic_Info").append(basic_info);
 
@@ -124,4 +136,18 @@ function Batter(data) {
     });
 
     $("#t").append(str);
+
+    // 다음 URL을 위한 네이밍작업
+    Player_Name = PlayerInfo[0].name_display_first_last;
 }
+
+var Button_Predict = document.getElementById('Button_Predict');
+Button_Predict.addEventListener('click' , function(event){
+    // 예측은 오버레이로 표시
+    console.log('예측 버튼 클릭')
+})
+
+var Button_Report = document.getElementById('Button_Report');
+Button_Report.addEventListener('click' , function(event){
+    window.location.href = 'Index?name=' + Player_Name; 
+})

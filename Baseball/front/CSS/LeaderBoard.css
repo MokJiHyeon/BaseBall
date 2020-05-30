@@ -30,14 +30,32 @@ body{
 	float:right;
 }
 
+.buttons{
+	margin: 1rem;
+	width: 100%;
+	float: left;
+}
+
+.buttons .selected {
+	background:lightblue;
+}
+
 .Dropdown_Container{
-	margin: 0.5rem;
-	width: 1000px;
 	float: left;
 }
 
 .Dropdown_Container .dropdown{
-	margin: 0.5rem;
+	margin: 1rem;
+	margin-right: 0;
+}
+
+.dropdown-menu {
+	max-height: 400px;
+	overflow:scroll;
+}
+
+.s_button{
+	margin:1rem;
 }
 
 .Contents_Container{
