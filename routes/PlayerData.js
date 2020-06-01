@@ -27,6 +27,7 @@ router.post('/Basic_byName', function (req, res, next) {
 
     // Name : 선수 이름 , Id_index : 선수의 Id가 있는 index(master 배열 내부의)
     var Name = req.body.Name;
+    Name = Name.replace('_'," ");
     var Id_index = master[1].indexOf(Name);
     var Player = Array();
 

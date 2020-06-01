@@ -1,4 +1,6 @@
 // 서버에서 선수 이름으로 Data를 제공받음 * 현재는 Shin-Soo Choo 고정
+var URL = document.URL;
+var Player = URL.split('=')[1];
 
 var Img_Team = document.getElementById('Img_Team');
 
@@ -6,8 +8,10 @@ var PlayerInfo = '';
 var Player_Name = '';
 var Team_Logos = ['ARI','ATL','BAL','BOS','CHC','CIN','CLE','COL','CWS','DET','HOU','KC','LAA','LAD','MIA','MIL','MIN','NYM','NYY','OAK','PHI','PIT','SD','SEA','SF','STL','TB','TEX','TOR','WSH'];
 
+var isBatter = false;
+
 Data = {
-    'Name':'Shin-Soo Choo'
+    'Name':Player
 }
 
 PlayerInfo22(Data)
@@ -27,6 +31,7 @@ function PlayerInfo22(Name) {
                 Pitcher(data);
             } else {
                 Batter(data);
+                isBatter = true;
             }
         },
         error: function (e) {
@@ -149,5 +154,10 @@ Button_Predict.addEventListener('click' , function(event){
 
 var Button_Report = document.getElementById('Button_Report');
 Button_Report.addEventListener('click' , function(event){
-    window.location.href = 'Index?name=' + Player_Name; 
+    if(isBatter == true){
+        window.location.href = 'Report_Batter?Name=' + Player; 
+    }
+    else{
+        window.location.href = 'Index?Name=' + Player; 
+    }
 })

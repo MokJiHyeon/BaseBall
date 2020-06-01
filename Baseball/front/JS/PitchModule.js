@@ -5,11 +5,16 @@ var pitch_type = Array();
 var plate_x = Array();
 var plate_z = Array();
 
+var name = "Hyun-Jin_Ryu";
+var Test = {
+    "Name" : name
+}
+
 // Ajax로 서버와 통신 (readExcels/Hyun-Jin_Ryu) ==> 차후 수정 예정 (선수명을 data로 전송)
 $.ajax({
     type: 'GET',
     url: '/readExcels/Hyun-Jin_Ryu',
-    data: '',
+    data: Test,
     dataType: 'json',
     success: function (data) {
         // Hyun-Jin_Ryu의 Excel 데이터를 서버로부터 제공받음.
