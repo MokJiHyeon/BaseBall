@@ -1,0 +1,27 @@
+.searchbox{
+    width: 25%;
+	float: right;
+	margin : 1rem;
+    z-index: 2;
+    
+
+}
+
+.searchList{
+    background-color: rgba(200,200,200);
+    z-index: 3;
+}
+
+.searchList ul{
+    display: none;
+    list-style: none;
+    margin: 0px;
+    padding: 10px;
+    z-index: 3;
+}
+
+
+.search_content{
+     color: black;
+     z-index: 3;
+}

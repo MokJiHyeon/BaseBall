@@ -5,6 +5,8 @@
 
     <link rel="stylesheet" href="../CSS/Main.css">
 
+    <link rel="stylesheet" href="../CSS/Search.css">
+
     <!-- bxSlider CSS file -->
     <link href="../lib/jQuery/jquery.bxslider.css" rel="stylesheet" />
 
@@ -13,8 +15,13 @@
 <body>
 
     <div class="Header">
-        <div class="Icon_Holder"><i class="fas fa-search"></i></div>
-        <input class="form-control" type="text" placeholder="검색" aria-label="Search">
+        <div class="Icon_Holder" style="display: block" onclick="search_click()"><i class="fas fa-search"></i></div>
+        <div class="searchbox">
+            <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
+            <div class="searchList">
+                <ul id="PlayerList" role="listbox" ></ul>
+            </div>
+        </div>
     </div>
     <br><br><br>
     <div class="box1">
@@ -44,7 +51,14 @@
 
 </body>
 <!-- jQuery 로드 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 
 <!-- FontAwesome(아이콘) 로드 -->
 <script src="../lib/FontAwesome/all.min.js"></script>
@@ -52,7 +66,8 @@
 <!-- BootStrap 로드 -->
 <script src="../lib/Bootstrap/bootstrap.min.js"></script>
 
-<script src="../JS/Main.js"></script>
-
 <!-- bxSlider Javascript file -->
 <script src="../lib/jQuery/jquery.bxslider.js"></script>
+
+<script src="../JS/Main.js"></script>
+<script src="../JS/Search.js"></script>

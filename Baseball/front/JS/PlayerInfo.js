@@ -59,6 +59,9 @@ function Pitcher(data) {
     if (PlayerInfo[0].bats == "R") {
         PlayerInfo[0].bats = "오른손";
     }
+    if (PlayerInfo[0].bats == "S") {
+        PlayerInfo[0].bats = "스위치 히터";
+    }
     if (PlayerInfo[0].throws == "L") {
         PlayerInfo[0].throws = "왼손";
     }
@@ -114,6 +117,9 @@ function Batter(data) {
     if (PlayerInfo[0].bats == "R") {
         PlayerInfo[0].bats = "오른손";
     }
+    if (PlayerInfo[0].bats == "S") {
+        PlayerInfo[0].bats = "스위치 히터";
+    }
     if (PlayerInfo[0].throws == "L") {
         PlayerInfo[0].throws = "왼손";
     }
@@ -158,6 +164,6 @@ Button_Report.addEventListener('click' , function(event){
         window.location.href = 'Report_Batter?Name=' + Player; 
     }
     else{
-        window.location.href = 'Index?Name=' + Player; 
+        window.location.href = 'Report_Pitcher?Name=' + Player; 
     }
 })

@@ -14,13 +14,12 @@ var json = {
     "Name": Player
 };
 
-Player = Player.replace('_', ' ');
-
 $.ajax({
     type: 'POST',
     url: '/readExcels/readBatter',
     data: json,
     success: function (data) {
+        Player = Player.replace('_', ' ');
         excelData = Json2Array(data);
         DataInitialize(excelData);
         AddText();
@@ -62,8 +61,10 @@ function DataInitialize(data) {
 
     for(var i = 0 ; i < indexes.length ; i++){
         var index = indexes[i];
-        Avg_Launch_Angle += parseFloat(Launch_Angle[index]);
-        Avg_Launch_Speed += parseFloat(Launch_Speed[index]);
+        if(Launch_Angle[index] != 'null' && Launch_Speed[index] != 'null'){
+            Avg_Launch_Angle += parseFloat(Launch_Angle[index]);
+            Avg_Launch_Speed += parseFloat(Launch_Speed[index]);
+        }
     }
 
     Avg_Launch_Angle = Avg_Launch_Angle/indexes.length;
@@ -421,7 +422,6 @@ function init() {
     // 여기부터 Vertices사용
     var origin = new THREE.Vector3(0,0,0);
     var temp_Vector3 = AngleMesh.geometry.vertices[AngleMesh.geometry.vertices.length - 1];
-    console.log(AngleMesh.geometry.vertices)
     var dir = new THREE.Vector3(temp_Vector3.x * 0.1 , temp_Vector3.y * 0.1 , 0);
     var length = 0;
     if(Avg_Launch_Speed > 120){

@@ -2,7 +2,7 @@
 
 <head>
   <!-- StyleSheet 로드 -->
-  <link rel="stylesheet" href="../CSS/Report_Batter.css">
+  <link rel="stylesheet" href="../CSS/Report_Pitcher.css">
 
   <link rel="stylesheet" href="../CSS/Search.css">
 
@@ -20,12 +20,12 @@
   <div class="Header">
     <div class="Icon_Holder" style="display: block" onclick="search_click()"><i class="fas fa-search"></i></div>
     <div class="searchbox">
-        <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
-        <div class="searchList">
-            <ul id="PlayerList" role="listbox" ></ul>
-        </div>
+      <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
+      <div class="searchList">
+        <ul id="PlayerList" role="listbox"></ul>
+      </div>
     </div>
-</div>
+  </div>
 
   <div id="Gui_Container"></div>
 
@@ -58,4 +58,4 @@
 <script src="../lib/Three.js/three.min.js"></script>
 
 <!-- Three.js Module 로드-->
-<script type="module" src="../JS/LaunchAngleModule.js"></script>
+<script type="module" src="../JS/PitchModule.js"></script>

@@ -8,10 +8,10 @@ router.get('/', function (req, res, next) {
     res.sendfile('./Baseball/front/HTML/Main.html');
 });
 
-router.get('/index', function (req, res, next) {
+router.get('/Report_Pitcher', function (req, res, next) {
     console.log('router.js_index.html Called');
 
-    res.sendfile('./Baseball/front/HTML/index.html');
+    res.sendfile('./Baseball/front/HTML/Report_Pitcher.html');
 });
 
 router.get('/PlayerInfo', function (req, res, next) {

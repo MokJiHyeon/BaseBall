@@ -4,6 +4,8 @@
   <!-- StyleSheet 로드 -->
   <link rel="stylesheet" href="../CSS/LeaderBoard.css">
 
+  <link rel="stylesheet" href="../CSS/Search.css">
+
   <!-- FontAwesome(아이콘) 로드 -->
   <link rel="stylesheet" href="../lib/FontAwesome/all.min.css">
 
@@ -16,11 +18,16 @@
 
 <body>
   <!-- 헤더 ( 검색창 ) -->
-  <div class="Header">
-    <div class="Icon_Holder"><i class="fas fa-search"></i></div>
-    <input class="form-control" type="text" placeholder="검색" aria-label="Search">
-  </div>
 
+  <div class="Header">
+    <div class="Icon_Holder" style="display: block" onclick="search_click()"><i class="fas fa-search"></i></div>
+    <div class="searchbox">
+        <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
+        <div class="searchList">
+            <ul id="PlayerList" role="listbox" ></ul>
+        </div>
+    </div>
+</div>
   <div class="buttons">
     <button type="button" class="btn-lg" id="p_button">2019 ERA</button>
     <button type="button" class="btn-lg" id="b_button">2019 HR</button>
@@ -122,7 +129,14 @@
 </body>
 
 <!-- jQuery 로드 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 
 <!-- FontAwesome(아이콘) 로드 -->
 <script src="../lib/FontAwesome/all.min.js"></script>
@@ -131,8 +145,4 @@
 <script src="../lib/Bootstrap/bootstrap.min.js"></script>
 
 <script src="../JS/LeaderBoard.js"></script>
-
-<script>
-
-
-</script>
+<script src="../JS/Search.js"></script>

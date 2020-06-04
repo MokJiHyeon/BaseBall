@@ -3,7 +3,6 @@ function search(target) { // 검색 함수
         'word': target.value
     };
 
-    console.log(target.attributes);
     $.ajax({
 
         type: 'POST',
@@ -35,14 +34,10 @@ function search(target) { // 검색 함수
 }
 
 function aa(target) { // 선수목록 리스트 클릭시 검색창 이름 변경
-
-    $("#sear").val(target);
-
-
+    window.location.href="PlayerInfo?Name=" + target.replace(" ","_");
 }
 
 function search_click() { // 검색클릭 시 함수
-
     var Name_search = {
         'Name': $("#sear").val()
     };

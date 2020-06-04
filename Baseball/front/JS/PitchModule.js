@@ -1,26 +1,28 @@
 //-------------------------------------------- 데이터 로드 파트 --------------------------------------------//
 // Excel data 초기화
+var URL = document.URL;
+var Player = URL.split('=')[1];
+
 var excelData = '';
 var pitch_type = Array();
 var plate_x = Array();
 var plate_z = Array();
 
-var name = "Hyun-Jin_Ryu";
-var Test = {
-    "Name" : name
-}
+var json = {
+    "Name": Player
+};
+
+Player = Player.replace('_', ' ');
 
 // Ajax로 서버와 통신 (readExcels/Hyun-Jin_Ryu) ==> 차후 수정 예정 (선수명을 data로 전송)
 $.ajax({
-    type: 'GET',
-    url: '/readExcels/Hyun-Jin_Ryu',
-    data: Test,
-    dataType: 'json',
+    type: 'POST',
+    url: '/readExcels/readPitcher',
+    data: json,
     success: function (data) {
-        // Hyun-Jin_Ryu의 Excel 데이터를 서버로부터 제공받음.
         excelData = Json2Array(data);
         DataInitialize(excelData);
-        console.log('data loaded Perfectly')
+        AddText();
         init();
     },
     error: function (e) {
@@ -50,11 +52,29 @@ function DataInitialize(data) {
     }
 }
 
+function AddText() {
+    var Right_Container = document.getElementById('Right_Container');
+
+    Right_Container.innerHTML += Player + " 선수의 2019년도 평균 발사각입니다.<br>"
+    Right_Container.innerHTML += "평균 발사 각도 : <span class='RedText'> 도</span><br>"
+    // Right_Container.innerHTML += "평균 타구 속도 : <span class='RedText'>" + Avg_Launch_Speed + " mph</span><br>"
+    // Right_Container.innerHTML += "<span class='BlueText'>파란색 선</span>은 "+ Player + " 선수의 평균 발사 각과 타구 속도를 의미하며,<br>"
+    Right_Container.innerHTML += "반원의 색은 타구 속도를 의미합니다.<br>"
+    Right_Container.innerHTML += "하양 반원 : 0mph ~ 30mph<br>";
+    Right_Container.innerHTML += "노랑 반원 : 30mph ~ 60mph<br>";
+    Right_Container.innerHTML += "주황 반원 : 60mpb ~ 90mph<br>";
+    Right_Container.innerHTML += "진한 주황 반원 : 90mph ~ 120mph<br>";
+    Right_Container.innerHTML += "( 원의 검정 라인은 10도 간격을 의미합니다. )<br>";
+    Right_Container.innerHTML += "붉은 색 부채꼴은 배럴타구 발사각도를 뜻합니다.<br>";
+    Right_Container.innerHTML += "배럴타구 발사각의 범위는 8도 ~ 50도 사이이며,<br>";
+    Right_Container.innerHTML += "타구 속도에 따라 각도가 변화합니다.<br>";
+}
+
 //-------------------------------------------- 데이터 로드 파트 END ----------------------------------------//
 //-------------------------------------------- Three.js 파트 Start ----------------------------------------//
 // ES6에서는 모듈 Load를 import로 한다.
 import * as THREE from '../lib/Three.js/three.module.js';
-import { OrbitControls } from '../lib/Three.js/OrbitControls.js';
+import { OrbitControls, MapControls } from '../lib/Three.js/OrbitControls.js';
 import * as dat from '../lib/Three.js/dat.gui.module.js';
 
 // Three.js 는 5가지 조건이 충족되어야 실행된다.
@@ -73,8 +93,8 @@ function init() {
     // 2. Camera
     var camera = new THREE.PerspectiveCamera(6, window.innerWidth / window.innerHeight, 1, 2000);
     camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 90;
+    camera.position.y = 90;
+    camera.position.z = 0;
     camera.lookAt(scene.position);
 
     // 3. Light (생략)
@@ -83,6 +103,7 @@ function init() {
     var StrikeZoneGeometry = new THREE.PlaneGeometry(9, 9, 1, 1);
     var StrikeZoneMaterial = new THREE.MeshBasicMaterial({ color: 0xCCCCCC });
     var StrikeZone = new THREE.Mesh(StrikeZoneGeometry, StrikeZoneMaterial);
+    StrikeZone.rotation.x = Math.PI / 2;
     scene.add(StrikeZone);
 
     // 스트라이크존에 Grid(격자) 추가 (8X9)
@@ -146,6 +167,7 @@ function init() {
     }
     var FrameGeometry = new THREE.BufferGeometry().setFromPoints(FramePoints);
     var Frame = new THREE.LineSegments(FrameGeometry, FrameMaterials);
+    Frame.rotation.x = -Math.PI / 2;
     scene.add(Frame);
 
     // 붉은색 스트라이크존 Grid
@@ -179,6 +201,7 @@ function init() {
     }
     var RedFrameGeometry = new THREE.BufferGeometry().setFromPoints(RedFramePoints);
     var RedFrame = new THREE.LineSegments(RedFrameGeometry, RedFrameMaterials);
+    RedFrame.rotation.x = -Math.PI / 2;
     scene.add(RedFrame);
 
     // 4. Materials - 공 생성
@@ -233,12 +256,24 @@ function init() {
     var CU = new THREE.Points(CUGeometry, CUmaterial);
     var SL = new THREE.Points(SLGeometry, SLmaterial);
 
-    FF.translateY(-2);
-    FT.translateY(-2);
-    FC.translateY(-2);
-    CH.translateY(-2);
-    CU.translateY(-2);
-    SL.translateY(-2);
+    FF.translateY(0.1);
+    FF.translateZ(2);
+    FF.rotation.x = -Math.PI / 2;
+    FT.translateY(0.11);
+    FT.translateZ(2);
+    FT.rotation.x = -Math.PI / 2;
+    FC.translateY(0.12);
+    FC.translateZ(2);
+    FC.rotation.x = -Math.PI / 2;
+    CH.translateY(0.13);
+    CH.translateZ(2);
+    CH.rotation.x = -Math.PI / 2;
+    CU.translateY(0.14);
+    CU.translateZ(2);
+    CU.rotation.x = -Math.PI / 2;
+    SL.translateY(0.15);
+    SL.translateZ(2);
+    SL.rotation.x = -Math.PI / 2;
 
     // scene에 점 추가
     scene.add(FF);
@@ -256,7 +291,7 @@ function init() {
 
     // InterFace :: Orbit Controls 추가
     // 카메라와 마우스 상호작용을 위해 OrbitControls를 설정합니다.
-    var controls = new OrbitControls(camera, renderer.domElement);
+    var controls = new MapControls(camera, renderer.domElement);
     // controls.target.set(0,2,0);
     controls.update();
 

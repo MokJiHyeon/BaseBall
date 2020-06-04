@@ -4,17 +4,6 @@ const fs = require('fs');
 
 const router = express.Router();
 
-router.get('/Hyun-Jin_Ryu', function (req, res, next) {
-    console.log('Hyun-Jin_Ryu Called');
-    var dataArray = '';
-    console.log(req.body)
-
-    fs.readFile('./DataBase/류현진.csv', 'utf8', function(err, data){
-      dataArray = data.split(/\r?\n/);
-      res.send(dataArray);
-    })
-});
-
 router.post('/readBatter', function (req, res, next) {
   console.log('readBatter Called');
   var dataArray = '';
@@ -22,6 +11,18 @@ router.post('/readBatter', function (req, res, next) {
   var name = req.body.Name;
 
   fs.readFile('./DataBase/Batters/' + name + '.csv', 'utf8', function(err, data){
+    dataArray = data.split(/\r?\n/);
+    res.send(dataArray);
+  })
+});
+
+router.post('/readPitcher', function (req, res, next) {
+  console.log('readPitcher Called');
+  var dataArray = '';
+
+  var name = req.body.Name;
+
+  fs.readFile('./DataBase/Pitchers/' + name + '.csv', 'utf8', function(err, data){
     dataArray = data.split(/\r?\n/);
     res.send(dataArray);
   })
