@@ -6,12 +6,12 @@ var Img_Team = document.getElementById('Img_Team');
 
 var PlayerInfo = '';
 var Player_Name = '';
-var Team_Logos = ['ARI','ATL','BAL','BOS','CHC','CIN','CLE','COL','CWS','DET','HOU','KC','LAA','LAD','MIA','MIL','MIN','NYM','NYY','OAK','PHI','PIT','SD','SEA','SF','STL','TB','TEX','TOR','WSH'];
+var Team_Logos = ['ARI', 'ATL', 'BAL', 'BOS', 'CHC', 'CIN', 'CLE', 'COL', 'CWS', 'DET', 'HOU', 'KC', 'LAA', 'LAD', 'MIA', 'MIL', 'MIN', 'NYM', 'NYY', 'OAK', 'PHI', 'PIT', 'SD', 'SEA', 'SF', 'STL', 'TB', 'TEX', 'TOR', 'WSH'];
 
 var isBatter = false;
 
 Data = {
-    'Name':Player
+    'Name': Player
 }
 
 PlayerInfo22(Data)
@@ -29,8 +29,10 @@ function PlayerInfo22(Name) {
             $("#Basic_Info *").remove();
             if (data[0].position == "P") {
                 Pitcher(data);
+                Pitcher_Predict(Name);
             } else {
                 Batter(data);
+                Batter_Predict(Name);
                 isBatter = true;
             }
         },
@@ -38,7 +40,7 @@ function PlayerInfo22(Name) {
             alert(e.responseText);
         }
     });
-}   
+}
 
 function Pitcher(data) {
 
@@ -69,9 +71,9 @@ function Pitcher(data) {
         PlayerInfo[0].throws = "오른손";
     }
 
-    basic_info += '<h1>'+PlayerInfo[0].name_display_first_last+'</h1>'+'<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
+    basic_info += '<h1>' + PlayerInfo[0].name_display_first_last + '</h1>' + '<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
     var Team = PlayerInfo[0].team_abbrev;
-    Img_Team.src = '../Images/Logos/'+Team+'.gif';
+    Img_Team.src = '../Images/Logos/' + Team + '.gif';
 
     $("#Basic_Info").append(basic_info);
 
@@ -126,9 +128,9 @@ function Batter(data) {
     if (PlayerInfo[0].throws == "R") {
         PlayerInfo[0].throws = "오른손";
     }
-    basic_info += '<h1>'+PlayerInfo[0].name_display_first_last+'</h1>'+'<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
+    basic_info += '<h1>' + PlayerInfo[0].name_display_first_last + '</h1>' + '<div>' + "소속팀 : " + PlayerInfo[0].team_full + '</div>' + '<div>' + "투 : " + PlayerInfo[0].throws + " / 타 : " + PlayerInfo[0].bats + '</div>' + '<div>' + "신장 : " + PlayerInfo[0].height_feet + "피트" + PlayerInfo[0].height_inches + "인치" + '</div>' + "포지션 : " + PlayerInfo[0].position + '</div>';
     var Team = PlayerInfo[0].team_abbrev;
-    Img_Team.src = '../Images/Logos/'+Team+'.gif';
+    Img_Team.src = '../Images/Logos/' + Team + '.gif';
 
     $("#Basic_Info").append(basic_info);
 
@@ -152,18 +154,145 @@ function Batter(data) {
     Player_Name = PlayerInfo[0].name_display_first_last;
 }
 
-var Button_Predict = document.getElementById('Button_Predict');
-Button_Predict.addEventListener('click' , function(event){
-    // 예측은 오버레이로 표시
-    console.log('예측 버튼 클릭')
-})
+function Batter_Predict(json) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Projection/Batter',
+        data: json,
+        success: function (data) {
+            var Predict_Table_Thead = document.getElementById('Predict_Table_Thead');
+            var TR = document.createElement('tr');
+            var th = document.createElement('th');
+            th.innerText = '구분';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '소속';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '안타';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '홈런';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '타점';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '타율';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '장타율';
+            TR.appendChild(th);
+            Predict_Table_Thead.appendChild(TR);
+
+            var Predict_Table_Tbody = document.getElementById('Predict_Table_Tbody');
+            for (var i = 0; i < data.length; i += 2) {
+                var TR = document.createElement('tr');
+                var td = document.createElement('td');
+                td.innerText = data[i];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][1];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][2];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][3];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][4];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][5];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][6];
+                TR.appendChild(td);
+                Predict_Table_Tbody.appendChild(TR);
+            }
+        },
+        error: function (e) {
+            alert(e.responseText);
+        }
+    });
+
+}
+
+function Pitcher_Predict(json) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Projection/Pitcher',
+        data: json,
+        success: function (data) {
+            var Predict_Table_Thead = document.getElementById('Predict_Table_Thead');
+            var TR = document.createElement('tr');
+            var th = document.createElement('th');
+            th.innerText = '구분';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '소속';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '승';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = 'ERA';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '삼진';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = '볼넷';
+            TR.appendChild(th);
+            var th = document.createElement('th');
+            th.innerText = 'WHIP';
+            TR.appendChild(th);
+            Predict_Table_Thead.appendChild(TR);
+
+            var Predict_Table_Tbody = document.getElementById('Predict_Table_Tbody');
+            for (var i = 0; i < data.length; i += 2) {
+                var TR = document.createElement('tr');
+                var td = document.createElement('td');
+                td.innerText = data[i];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][1];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][2];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][3];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][4];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][5];
+                TR.appendChild(td);
+                var td = document.createElement('td');
+                td.innerText = data[i + 1][6];
+                TR.appendChild(td);
+                Predict_Table_Tbody.appendChild(TR);
+            }
+        },
+        error: function (e) {
+            alert(e.responseText);
+        }
+    });
+
+
+}
 
 var Button_Report = document.getElementById('Button_Report');
-Button_Report.addEventListener('click' , function(event){
-    if(isBatter == true){
-        window.location.href = 'Report_Batter?Name=' + Player; 
+Button_Report.addEventListener('click', function (event) {
+    if (isBatter == true) {
+        window.location.href = 'Report_Batter?Name=' + Player;
     }
-    else{
-        window.location.href = 'Report_Pitcher?Name=' + Player; 
+    else {
+        window.location.href = 'Report_Pitcher?Name=' + Player;
     }
 })

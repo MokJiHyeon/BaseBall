@@ -25,8 +25,6 @@ function search(target) { // 검색 함수
             } else {
                 $("#PlayerList").css("display", "none");
             }
-
-
         }
     }); //end Ajax
 
@@ -38,9 +36,7 @@ function aa(target) { // 선수목록 리스트 클릭시 검색창 이름 변�
 }
 
 function search_click() { // 검색클릭 시 함수
-    var Name_search = {
-        'Name': $("#sear").val()
-    };
+    var Name = $("#sear").val();
 
-    PlayerInfo22(Name_search);
+    window.location.href="PlayerInfo?Name=" + Name.replace(" ","_");
 }

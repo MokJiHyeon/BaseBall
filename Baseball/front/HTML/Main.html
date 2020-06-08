@@ -5,25 +5,33 @@
 
     <link rel="stylesheet" href="../CSS/Main.css">
 
-    <link rel="stylesheet" href="../CSS/Search.css">
-
     <!-- bxSlider CSS file -->
     <link href="../lib/jQuery/jquery.bxslider.css" rel="stylesheet" />
 
+    <!-- BootStrap 로드 -->
+    <link rel="stylesheet" href="../lib/Bootstrap/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../CSS/Search.css">
+
+    <link rel="stylesheet" href="../CSS/Nav_Bar.css">
 </head>
 
 <body>
-
     <div class="Header">
-        <div class="Icon_Holder" style="display: block" onclick="search_click()"><i class="fas fa-search"></i></div>
+        <div class="menu">
+            <a href="/" class="menu_main">메인</a>
+            <a href="/LeaderBoard" class="menu_leaderboard">리더보드</a>
+        </div>
+
         <div class="searchbox">
-            <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
+            <input class="form-control Search_Bar" id="sear" type="text" placeholder=" 이름" onkeyup="search(this);">
             <div class="searchList">
-                <ul id="PlayerList" role="listbox" ></ul>
+                <ul id="PlayerList" role="listbox"></ul>
             </div>
         </div>
     </div>
-    <br><br><br>
+
+    <br><br><br><br>
     <div class="box1">
         <div class="bxslider" id="bxslider1">
 

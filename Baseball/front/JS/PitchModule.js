@@ -54,27 +54,27 @@ function DataInitialize(data) {
 
 function AddText() {
     var Right_Container = document.getElementById('Right_Container');
+    Right_Container.innerHTML = '';
 
-    Right_Container.innerHTML += Player + " 선수의 2019년도 평균 발사각입니다.<br>"
-    Right_Container.innerHTML += "평균 발사 각도 : <span class='RedText'> 도</span><br>"
-    // Right_Container.innerHTML += "평균 타구 속도 : <span class='RedText'>" + Avg_Launch_Speed + " mph</span><br>"
-    // Right_Container.innerHTML += "<span class='BlueText'>파란색 선</span>은 "+ Player + " 선수의 평균 발사 각과 타구 속도를 의미하며,<br>"
-    Right_Container.innerHTML += "반원의 색은 타구 속도를 의미합니다.<br>"
-    Right_Container.innerHTML += "하양 반원 : 0mph ~ 30mph<br>";
-    Right_Container.innerHTML += "노랑 반원 : 30mph ~ 60mph<br>";
-    Right_Container.innerHTML += "주황 반원 : 60mpb ~ 90mph<br>";
-    Right_Container.innerHTML += "진한 주황 반원 : 90mph ~ 120mph<br>";
-    Right_Container.innerHTML += "( 원의 검정 라인은 10도 간격을 의미합니다. )<br>";
-    Right_Container.innerHTML += "붉은 색 부채꼴은 배럴타구 발사각도를 뜻합니다.<br>";
-    Right_Container.innerHTML += "배럴타구 발사각의 범위는 8도 ~ 50도 사이이며,<br>";
-    Right_Container.innerHTML += "타구 속도에 따라 각도가 변화합니다.<br>";
+    Right_Container.innerHTML += Player + " 선수의 2019년도 투구 기록입니다.<br>"
+    Right_Container.innerHTML += "왼쪽의 컨트롤러를 통해 원하는 구질을 볼 수 있습니다. <br><br>"
+    Right_Container.innerHTML += "2019년 총 투구 수 : " + pitch_type.length + " 구<br>"
+    Right_Container.innerHTML += "<span style='color:#FF0000'>FF (포심 패스트볼) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#DC7633'>FT (투심 패스트볼) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#A569BD'>FC (컷 패스트볼) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#00CC00'>CH (체인지업) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#0000FF'>CU (커브볼) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#00CCCC'>SL (슬라이더) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#F4D03F'>SK (싱커) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#5D6D7E'>SP (스플리터) </span><br>"
+    Right_Container.innerHTML += "<span style='color:#48C9B0'>KN (너클볼) </span><br>"
 }
 
 //-------------------------------------------- 데이터 로드 파트 END ----------------------------------------//
 //-------------------------------------------- Three.js 파트 Start ----------------------------------------//
 // ES6에서는 모듈 Load를 import로 한다.
 import * as THREE from '../lib/Three.js/three.module.js';
-import { OrbitControls, MapControls } from '../lib/Three.js/OrbitControls.js';
+import { MapControls } from '../lib/Three.js/OrbitControls.js';
 import * as dat from '../lib/Three.js/dat.gui.module.js';
 
 // Three.js 는 5가지 조건이 충족되어야 실행된다.
@@ -88,7 +88,6 @@ function init() {
     // 5가지 조건을 미리 선언
     // 1. Scene
     var scene = new THREE.Scene();
-    console.log('now start Moduling')
 
     // 2. Camera
     var camera = new THREE.PerspectiveCamera(6, window.innerWidth / window.innerHeight, 1, 2000);
@@ -109,61 +108,61 @@ function init() {
     // 스트라이크존에 Grid(격자) 추가 (8X9)
     var FrameMaterials = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 });
     var FramePoints = [];
-    for(var i = -4.5 ; i < 4.5 ; i++){
+    for (var i = -4.5; i < 4.5; i++) {
         // 가로선 그리기
-        var a = 9/8;
+        var a = 9 / 8;
         var temp = -4.5;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
         //
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
         //
-        temp = temp+a;
-        FramePoints.push(new THREE.Vector3(temp , i , 0))
-        FramePoints.push(new THREE.Vector3(temp , i+1 , 0))
+        temp = temp + a;
+        FramePoints.push(new THREE.Vector3(temp, i, 0))
+        FramePoints.push(new THREE.Vector3(temp, i + 1, 0))
     }
-    for(var i = -4.5 ; i < 4.5 ; i++){
+    for (var i = -4.5; i < 4.5; i++) {
         //세로선 그리기
-        FramePoints.push(new THREE.Vector3(i , -4.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , -4.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , -3.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , -3.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , -2.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , -2.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , -1.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , -1.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , -0.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , -0.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , 0.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , 0.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , 1.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , 1.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , 2.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , 2.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , 3.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , 3.5 , 0))
-        FramePoints.push(new THREE.Vector3(i , 4.5 , 0))
-        FramePoints.push(new THREE.Vector3(i+1 , 4.5 , 0))
+        FramePoints.push(new THREE.Vector3(i, -4.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, -4.5, 0))
+        FramePoints.push(new THREE.Vector3(i, -3.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, -3.5, 0))
+        FramePoints.push(new THREE.Vector3(i, -2.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, -2.5, 0))
+        FramePoints.push(new THREE.Vector3(i, -1.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, -1.5, 0))
+        FramePoints.push(new THREE.Vector3(i, -0.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, -0.5, 0))
+        FramePoints.push(new THREE.Vector3(i, 0.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, 0.5, 0))
+        FramePoints.push(new THREE.Vector3(i, 1.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, 1.5, 0))
+        FramePoints.push(new THREE.Vector3(i, 2.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, 2.5, 0))
+        FramePoints.push(new THREE.Vector3(i, 3.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, 3.5, 0))
+        FramePoints.push(new THREE.Vector3(i, 4.5, 0))
+        FramePoints.push(new THREE.Vector3(i + 1, 4.5, 0))
     }
     var FrameGeometry = new THREE.BufferGeometry().setFromPoints(FramePoints);
     var Frame = new THREE.LineSegments(FrameGeometry, FrameMaterials);
@@ -173,31 +172,31 @@ function init() {
     // 붉은색 스트라이크존 Grid
     var RedFrameMaterials = new THREE.LineBasicMaterial({ color: 0xFF00FF, linewidth: 2 });
     var RedFramePoints = [];
-    for(var i = -1.5 ; i < 2.5 ; i++){
+    for (var i = -1.5; i < 2.5; i++) {
         // 가로선 그리기
-        a = 9/8;
-        RedFramePoints.push(new THREE.Vector3(-4.5+(2*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(2*a) , i+1 , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(3*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(3*a) , i+1 , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(4*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(4*a) , i+1 , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(5*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(5*a) , i+1 , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(6*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(6*a) , i+1 , 0))
+        a = 9 / 8;
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (2 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (2 * a), i + 1, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (3 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (3 * a), i + 1, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (4 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (4 * a), i + 1, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (5 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (5 * a), i + 1, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (6 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (6 * a), i + 1, 0))
     }
-    for(var i = -1.5 ; i < 3.5 ; i++){
+    for (var i = -1.5; i < 3.5; i++) {
         //세로선 그리기
-        a = 9/8;
-        RedFramePoints.push(new THREE.Vector3(-4.5+(2*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(3*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(3*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(4*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(4*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(5*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(5*a) , i , 0))
-        RedFramePoints.push(new THREE.Vector3(-4.5+(6*a) , i , 0))
+        a = 9 / 8;
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (2 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (3 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (3 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (4 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (4 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (5 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (5 * a), i, 0))
+        RedFramePoints.push(new THREE.Vector3(-4.5 + (6 * a), i, 0))
     }
     var RedFrameGeometry = new THREE.BufferGeometry().setFromPoints(RedFramePoints);
     var RedFrame = new THREE.LineSegments(RedFrameGeometry, RedFrameMaterials);
@@ -205,23 +204,41 @@ function init() {
     scene.add(RedFrame);
 
     // 4. Materials - 공 생성
-    var FFGeometry = new THREE.Geometry(); // Fastball Fourseam 0xFF0000(빨강)
-    var FFmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xFF0000, opacity:0.7 })
+    var FFGeometry = new THREE.Geometry(); // Fastball Fourseam #FF0000
+    var FFmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xFF0000  })
+    var FF_Flag = 0;
 
-    var FTGeometry = new THREE.Geometry(); // Fastball Twoseam 0xFFFF00(노랑)
-    var FTmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xFFFF00 })
+    var FTGeometry = new THREE.Geometry(); // Fastball Twoseam #DC7633
+    var FTmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xDC7633 })
+    var FT_Flag = 0;
 
-    var FCGeometry = new THREE.Geometry(); // Fastball Cutter 0x00FF00(초록)
-    var FCmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x00FF00 })
+    var FCGeometry = new THREE.Geometry(); // Fastball Cutter #A569BD
+    var FCmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xA569BD  })
+    var FC_Flag = 0;
 
-    var CHGeometry = new THREE.Geometry(); // Change Up 0x0000FF(파랑)
-    var CHmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x0000FF })
+    var CHGeometry = new THREE.Geometry(); // Change Up #00FF00
+    var CHmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x00CC00  })
+    var CH_Flag = 0;
 
-    var CUGeometry = new THREE.Geometry(); // Curve Ball 0x00FFFF(아쿠아)
-    var CUmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x00FFFF })
+    var CUGeometry = new THREE.Geometry(); // Curve Ball #0000FF  
+    var CUmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x0000FF   })
+    var CU_Flag = 0;
 
-    var SLGeometry = new THREE.Geometry(); // SLider 0xFF00FF(마젠타)
-    var SLmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xFF00FF })
+    var SLGeometry = new THREE.Geometry(); // SLider #00FFFF
+    var SLmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x00CCCC })
+    var SL_Flag = 0;
+
+    var SKGeometry = new THREE.Geometry(); // SinKer 0xF4D03F
+    var SKmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0xF4D03F  })
+    var SK_Flag = 0;
+
+    var SPGeometry = new THREE.Geometry(); // SPlitter #5D6D7E 
+    var SPmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x5D6D7E  })
+    var SP_Flag = 0;
+
+    var KNGeometry = new THREE.Geometry(); // KNukle #48C9B0  
+    var KNmaterial = new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, color: 0x48C9B0   })
+    var KN_Flag = 0;
 
     for (var i = 0; i < pitch_type.length; i++) {
         var vertex = new THREE.Vector3(parseFloat(plate_x[i]), parseFloat(plate_z[i]), 0.1); // Vertex 좌표 생성
@@ -229,21 +246,39 @@ function init() {
         switch (temp_pitch_type) {
             case 'FF':
                 FFGeometry.vertices.push(vertex);
+                FF_Flag += 1;
                 break;
             case 'FT':
                 FTGeometry.vertices.push(vertex);
+                FT_Flag += 1;
                 break;
             case 'FC':
                 FCGeometry.vertices.push(vertex);
+                FC_Flag += 1;
                 break;
             case 'CH':
                 CHGeometry.vertices.push(vertex);
+                CH_Flag += 1;
                 break;
             case 'CU':
                 CUGeometry.vertices.push(vertex);
+                CU_Flag += 1;
                 break;
             case 'SL':
-                FTGeometry.vertices.push(vertex);
+                SLGeometry.vertices.push(vertex);
+                SL_Flag += 1;
+                break;
+            case 'SK':
+                SKGeometry.vertices.push(vertex);
+                SK_Flag += 1;
+                break;
+            case 'SP':
+                SPGeometry.vertices.push(vertex);
+                SP_Flag += 1;
+                break;
+            case 'KN':
+                KNGeometry.vertices.push(vertex);
+                KN_Flag += 1;
                 break;
         }
     }
@@ -255,6 +290,9 @@ function init() {
     var CH = new THREE.Points(CHGeometry, CHmaterial);
     var CU = new THREE.Points(CUGeometry, CUmaterial);
     var SL = new THREE.Points(SLGeometry, SLmaterial);
+    var SK = new THREE.Points(SKGeometry, SKmaterial);
+    var SP = new THREE.Points(SPGeometry, SPmaterial);
+    var KN = new THREE.Points(KNGeometry, KNmaterial);
 
     FF.translateY(0.1);
     FF.translateZ(2);
@@ -271,17 +309,47 @@ function init() {
     CU.translateY(0.14);
     CU.translateZ(2);
     CU.rotation.x = -Math.PI / 2;
-    SL.translateY(0.15);
+    SL.translateY(0.16);
     SL.translateZ(2);
     SL.rotation.x = -Math.PI / 2;
+    SK.translateY(0.16);
+    SK.translateZ(2);
+    SK.rotation.x = -Math.PI / 2;
+    SP.translateY(0.18);
+    SP.translateZ(2);
+    SP.rotation.x = -Math.PI / 2;
+    KN.translateY(0.20);
+    KN.translateZ(2);
+    KN.rotation.x = -Math.PI / 2;
 
     // scene에 점 추가
-    scene.add(FF);
-    scene.add(FT);
-    scene.add(FC);
-    scene.add(CH);
-    scene.add(CU);
-    scene.add(SL);
+    if (FF_Flag != 0) {
+        scene.add(FF);
+    }
+    if (FT_Flag != 0) {
+        scene.add(FT);
+    }
+    if (FC_Flag != 0) {
+        scene.add(FC);
+    }
+    if (CH_Flag != 0) {
+        scene.add(CH);
+    }
+    if (CU_Flag != 0) {
+        scene.add(CU);
+    }
+    if (SL_Flag != 0) {
+        scene.add(SL);
+    }
+    if (SK_Flag != 0) {
+        scene.add(SK);
+    }
+    if (SP_Flag != 0) {
+        scene.add(SP);
+    }
+    if (KN_Flag != 0) {
+        scene.add(KN);
+    }
 
     // 5. Renderer
     var renderer = new THREE.WebGLRenderer({ antialise: true }); // 안티엘리어싱-true : 선명하게
@@ -314,6 +382,9 @@ function init() {
         this.CH = true;
         this.CU = true;
         this.SL = true;
+        this.SK = true;
+        this.SP = true;
+        this.KN = true;
     }
 
     var Gui = new dat.GUI({ autoPlace: false });
@@ -323,83 +394,140 @@ function init() {
     Gui_Container.appendChild(Gui.domElement);
 
     // gui에 탭 추가 및 아이템에 이벤트 추가 (onChange)
-    var Flag_FF = 0;
-    Gui.add(GuiControls, 'FF').onChange(
-        function (params) {
-            if ((Flag_FF % 2) == 0) {
-                scene.remove(FF);
+    if (FF_Flag != 0) {
+        var Flag_FF = 0;
+        Gui.add(GuiControls, 'FF').onChange(
+            function (params) {
+                if ((Flag_FF % 2) == 0) {
+                    scene.remove(FF);
+                }
+                if ((Flag_FF % 2) == 1) {
+                    scene.add(FF);
+                }
+                Flag_FF++;
             }
-            if ((Flag_FF % 2) == 1) {
-                scene.add(FF);
-            }
-            Flag_FF++;
-        }
-    );
+        );
+    }
 
-    var Flag_FT = 0;
-    Gui.add(GuiControls, 'FT').onChange(
-        function (params) {
-            if ((Flag_FT % 2) == 0) {
-                scene.remove(FT);
+    if (FT_Flag != 0) {
+        var Flag_FT = 0;
+        Gui.add(GuiControls, 'FT').onChange(
+            function (params) {
+                if ((Flag_FT % 2) == 0) {
+                    scene.remove(FT);
+                }
+                if ((Flag_FT % 2) == 1) {
+                    scene.add(FT);
+                }
+                Flag_FT++;
             }
-            if ((Flag_FT % 2) == 1) {
-                scene.add(FT);
-            }
-            Flag_FT++;
-        }
-    );
+        );
+    }
 
-    var Flag_FC = 0;
-    Gui.add(GuiControls, 'FC').onChange(
-        function (params) {
-            if ((Flag_FC % 2) == 0) {
-                scene.remove(FC);
+    if (FC_Flag != 0) {
+        var Flag_FC = 0;
+        Gui.add(GuiControls, 'FC').onChange(
+            function (params) {
+                if ((Flag_FC % 2) == 0) {
+                    scene.remove(FC);
+                }
+                if ((Flag_FC % 2) == 1) {
+                    scene.add(FC);
+                }
+                Flag_FC++;
             }
-            if ((Flag_FC % 2) == 1) {
-                scene.add(FC);
-            }
-            Flag_FC++;
-        }
-    );
+        );
+    }
 
-    var Flag_CH = 0;
-    Gui.add(GuiControls, 'CH').onChange(
-        function (params) {
-            if ((Flag_CH % 2) == 0) {
-                scene.remove(CH);
+    if (CH_Flag != 0) {
+        var Flag_CH = 0;
+        Gui.add(GuiControls, 'CH').onChange(
+            function (params) {
+                if ((Flag_CH % 2) == 0) {
+                    scene.remove(CH);
+                }
+                if ((Flag_CH % 2) == 1) {
+                    scene.add(CH);
+                }
+                Flag_CH++;
             }
-            if ((Flag_CH % 2) == 1) {
-                scene.add(CH);
-            }
-            Flag_CH++;
-        }
-    );
+        );
+    }
 
-    var Flag_CU = 0;
-    Gui.add(GuiControls, 'CU').onChange(
-        function (params) {
-            if ((Flag_CU % 2) == 0) {
-                scene.remove(CU);
+    if (CU_Flag != 0) {
+        var Flag_CU = 0;
+        Gui.add(GuiControls, 'CU').onChange(
+            function (params) {
+                if ((Flag_CU % 2) == 0) {
+                    scene.remove(CU);
+                }
+                if ((Flag_CU % 2) == 1) {
+                    scene.add(CU);
+                }
+                Flag_CU++;
             }
-            if ((Flag_CU % 2) == 1) {
-                scene.add(CU);
-            }
-            Flag_CU++;
-        }
-    );
+        );
+    }
 
-    var Flag_SL = 0;
-    Gui.add(GuiControls, 'SL').onChange(
-        function (params) {
-            if ((Flag_SL % 2) == 0) {
-                scene.remove(SL);
+    if (SL_Flag != 0) {
+        var Flag_SL = 0;
+        Gui.add(GuiControls, 'SL').onChange(
+            function (params) {
+                if ((Flag_SL % 2) == 0) {
+                    scene.remove(SL);
+                }
+                if ((Flag_SL % 2) == 1) {
+                    scene.add(SL);
+                }
+                Flag_SL++;
             }
-            if ((Flag_SL % 2) == 1) {
-                scene.add(SL);
+        );
+    }
+
+    if (SK_Flag != 0) {
+        var Flag_SK = 0;
+        Gui.add(GuiControls, 'SK').onChange(
+            function (params) {
+                if ((Flag_SK % 2) == 0) {
+                    scene.remove(SK);
+                }
+                if ((Flag_SK % 2) == 1) {
+                    scene.add(SK);
+                }
+                Flag_SK++;
             }
-            Flag_SL++;
-        }
-    );
+        );
+    }
+
+    if (SP_Flag != 0) {
+        var Flag_SP = 0;
+        Gui.add(GuiControls, 'SP').onChange(
+            function (params) {
+                if ((Flag_SP % 2) == 0) {
+                    scene.remove(SP);
+                }
+                if ((Flag_SP % 2) == 1) {
+                    scene.add(SP);
+                }
+                Flag_SP++;
+            }
+        );
+    }
+
+    if (KN_Flag != 0) {
+        var Flag_KN = 0;
+        Gui.add(GuiControls, 'KN').onChange(
+            function (params) {
+                if ((Flag_KN % 2) == 0) {
+                    scene.remove(KN);
+                }
+                if ((Flag_KN % 2) == 1) {
+                    scene.add(KN);
+                }
+                Flag_KN++;
+            }
+        );
+    }
 
     // Div(Scene)에 Renderer를 등록
     function render() {

@@ -48,6 +48,8 @@ $("#p_button").click(function () { // 투수 버튼을 클릭할 때
     });
 });
 
+$("#p_button").click();
+
 // Customize
 var year ='';
 var index = '';

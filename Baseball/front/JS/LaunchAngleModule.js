@@ -77,16 +77,16 @@ function DataInitialize(data) {
 function AddText() {
     var Right_Container = document.getElementById('Right_Container');
 
-    Right_Container.innerHTML += Player + " 선수의 2019년도 평균 발사각입니다.<br>"
+    Right_Container.innerHTML += Player + " 선수의 2019년도 평균 발사각입니다.<br><br>"
     Right_Container.innerHTML += "평균 발사 각도 : <span class='RedText'>" + Avg_Launch_Angle + " 도</span><br>"
-    Right_Container.innerHTML += "평균 타구 속도 : <span class='RedText'>" + Avg_Launch_Speed + " mph</span><br>"
+    Right_Container.innerHTML += "평균 타구 속도 : <span class='RedText'>" + Avg_Launch_Speed + " mph</span><br><br>"
     Right_Container.innerHTML += "<span class='BlueText'>파란색 선</span>은 "+ Player + " 선수의 평균 발사 각과 타구 속도를 의미하며,<br>"
-    Right_Container.innerHTML += "반원의 색은 타구 속도를 의미합니다.<br>"
+    Right_Container.innerHTML += "반원의 색은 타구 속도를 의미합니다.<br><br>"
     Right_Container.innerHTML += "하양 반원 : 0mph ~ 30mph<br>";
     Right_Container.innerHTML += "노랑 반원 : 30mph ~ 60mph<br>";
     Right_Container.innerHTML += "주황 반원 : 60mpb ~ 90mph<br>";
     Right_Container.innerHTML += "진한 주황 반원 : 90mph ~ 120mph<br>";
-    Right_Container.innerHTML += "( 원의 검정 라인은 10도 간격을 의미합니다. )<br>";
+    Right_Container.innerHTML += "( 원의 검정 라인은 10도 간격을 의미합니다. )<br><br>";
     Right_Container.innerHTML += "붉은 색 부채꼴은 배럴타구 발사각도를 뜻합니다.<br>";
     Right_Container.innerHTML += "배럴타구 발사각의 범위는 8도 ~ 50도 사이이며,<br>";
     Right_Container.innerHTML += "타구 속도에 따라 각도가 변화합니다.<br>";

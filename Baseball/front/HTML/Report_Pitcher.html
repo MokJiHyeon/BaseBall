@@ -4,28 +4,23 @@
   <!-- StyleSheet 로드 -->
   <link rel="stylesheet" href="../CSS/Report_Pitcher.css">
 
-  <link rel="stylesheet" href="../CSS/Search.css">
-
   <!-- FontAwesome(아이콘) 로드 -->
   <link rel="stylesheet" href="../lib/FontAwesome/all.min.css">
 
   <!-- BootStrap 로드 -->
   <link rel="stylesheet" href="../lib/Bootstrap/bootstrap.min.css">
-  
-  <script type="script" src="../JS/Search.js"></script>
+
+  <link rel="stylesheet" href="../CSS/Nav_Bar.css">
 </head>
 
 <body>
-
   <div class="Header">
-    <div class="Icon_Holder" style="display: block" onclick="search_click()"><i class="fas fa-search"></i></div>
-    <div class="searchbox">
-      <input class="form-control" id="sear" type="text" placeholder="검색" onkeyup="search(this);">
-      <div class="searchList">
-        <ul id="PlayerList" role="listbox"></ul>
-      </div>
+    <div class="menu">
+        <a href="/" class="menu_main">메인</a>
+        <a href="/LeaderBoard" class="menu_leaderboard">리더보드</a>
     </div>
   </div>
+  <br><br>
 
   <div id="Gui_Container"></div>
 
